@@ -90,11 +90,12 @@ def divide__modelspace_into_multiA4papers( inpFile=None, outFile=None, outBase=N
     center = ( 0.5*page_width, 0.5*page_height )
     for ik in range( nPages_w ):
         for jk in range( nPages_h ):
-            center = page_centers[ik,jk,:]
-            lo     = doc.layout()
-            sp     = lo.page_setup( size=size, margins=(0,0,0,0), units="mm" )
-            vp     = lo.add_viewport( center=center, view_center_point=center, \
-                                      size=size, view_height=size[1] )
+            center   = np.copy( page_centers[ik,jk,:] )
+            vcenter  = np.copy( page_centers[ik,jk,:] )
+            lo       = doc.layout()
+            sp       = lo.page_setup( size=size, margins=(0,0,0,0), units="mm" )
+            vp       = lo.add_viewport( center=center, view_center_point=vcenter, \
+                                        size=size, view_height=int(size[1]) )
             outFile_ = outBase.format( ik+1, jk+1 )
             doc.saveas( outFile_ )
             print( "[test06.py] save in a file :: {} ".format( outFile_ ) )

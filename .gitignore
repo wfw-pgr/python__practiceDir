@@ -1,2 +1,4 @@
 *.png
 *.dxf
+*.jpg
+reportlab/pdf/*.pdf

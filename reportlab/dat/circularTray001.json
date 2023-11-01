@@ -1,0 +1,18 @@
+{
+    "settings":{
+	"holeFile":"dat/circularTray001_hole.dat",
+	"outFile":"pdf/circularTray001.pdf",
+	"bbox":[ -550.0, -550.0, 550.0, 550.0],
+	"pagesize":[297.0,420.0],
+	"centering":true
+    },
+    
+    "shape":{
+	"circle":{
+	    "shapeType":"circle",
+	    "center":[0.0,0.0],
+	    "radius":540.0
+	}
+    }
+    
+}

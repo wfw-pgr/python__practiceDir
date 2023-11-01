@@ -1,14 +1,15 @@
 import math
 import reportlab
-from reportlab.lib import units
+from reportlab.lib           import units
 from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
+from reportlab.pdfgen        import canvas
 
 # ------------------------------------------------- #
 # --- [1] ページ設定                            --- #
 # ------------------------------------------------- #
 pt_width, pt_height = A4
 orig_size           = ( pt_width, pt_height )
+linewidth           = 1.0e-3
 pt2inch, inch2mm    = 1.0 / 72.0, 25.4
 pt2mm               = pt2inch   * inch2mm
 mm_width            = pt_width  * pt2mm
@@ -20,6 +21,7 @@ mm_height           = pt_height * pt2mm
 outFile             = "pdf/example.pdf"
 page_size           = ( mm_width, mm_height )
 c                   = canvas.Canvas( outFile, pagesize=page_size )
+c.setLineWidth( linewidth )
 
 print( "\n" + " --- reportlab --- " + "\n" )
 print( "  page_size (pt) :: ( {0[0]:.3f}, {0[1]:.3f} )".format( orig_size ) )
@@ -61,3 +63,4 @@ c.circle( center_x, center_y, radius3 )
 # ページを保存
 c.showPage()
 c.save()
+print( "[basic_sample.py] outFile :: {} ".format( outFile ) )
