@@ -8,7 +8,8 @@ import nkTextProcess.convert__text2pdf    as t2p
 # ========================================================= #
 
 def translator__usingGoogleTrans( input_pdfFile=None, output_pdfFile=None, \
-                                  english_txtFile=None, japanese_txtFile=None, silent=True ):
+                                  english_txtFile=None, japanese_txtFile=None, \
+                                  fontsize=9.0, silent=True ):
 
     # ------------------------------------------------- #
     # --- [1] arguments                             --- #
@@ -47,7 +48,7 @@ def translator__usingGoogleTrans( input_pdfFile=None, output_pdfFile=None, \
     # ------------------------------------------------- #
     # --- [5] convert into japanese pdf             --- #
     # ------------------------------------------------- #
-    t2p.convert__text2pdf( outFile=output_pdfFile, texts=text_stack )
+    t2p.convert__text2pdf( outFile=output_pdfFile, texts=text_stack, fontsize=fontsize )
     
     # ------------------------------------------------- #
     # --- [6] return                                --- #
@@ -60,15 +61,39 @@ def translator__usingGoogleTrans( input_pdfFile=None, output_pdfFile=None, \
 # ========================================================= #
 
 if ( __name__=="__main__" ):
+
+    # ------------------------------------------------- #
+    # --- [1] arguments                             --- #
+    # ------------------------------------------------- #
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument( "--input_pdf"     , default=None, help="input pdf file"     )
+    parser.add_argument( "--output_pdf"    , default=None, help="output pdf file"    )
+    parser.add_argument( "--english_text"  , default=None, help="english_text_file"  )
+    parser.add_argument( "--japanese_text" , default=None, help="japanese_text_file" )
+    parser.add_argument( "--fontsize"      , type=float, default=9.0, help="font size"        )
+    parser.add_argument( "--show"          , type=bool , default=False, help="display or not" )
+    parser.add_argument( "--intermediate"  , type=bool , default=False, help="intermidiate file out" )
     
-    input_pdfFile    = "pdf/sample.pdf"
-    output_pdfFile   = None
-    english_txtFile  = "dat/text_en.txt"
-    japanese_txtFile = "dat/text_ja.txt"
-    silent           = True
-    translator__usingGoogleTrans( input_pdfFile=input_pdfFile, output_pdfFile=output_pdfFile, \
-                                  english_txtFile=english_txtFile, japanese_txtFile=japanese_txtFile,\
-                                  silent=silent )
+    args   = parser.parse_args()
+
+    if ( not( args.input_pdf ) ):
+        print( "[ How to use ] python translator__usingGoogleTrans.py --input_pdf xxx.pdf " )
+        sys.exit()
+    else:
+        input_pdfFile = str( args.input_pdf )
+    if ( args.intermediate ):
+        if ( args.english_text  is None ): args.english_text  = "text_en.txt"
+        if ( args.japanese_text is None ): args.japanese_text = "text_ja.txt"
+
+    # ------------------------------------------------- #
+    # --- [2] call translator                       --- #
+    # ------------------------------------------------- #
+    print( "[translator__usingGoogleTrans.py] translation of {}".format( args.input_pdf ) )
+    translator__usingGoogleTrans( input_pdfFile=args.input_pdf, output_pdfFile=args.output_pdf, \
+                                  english_txtFile=args.english_text, \
+                                  japanese_txtFile=args.japanese_text,\
+                                  fontsize=args.fontsize, silent=not( args.show ) )
 
 
 
